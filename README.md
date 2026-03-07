@@ -19,11 +19,13 @@ git config core.autocrlf true
 git restore 
 .git status
 
+Task 1
 1. docker compose up -d //-d flag runs the docker container in detached mode which is similar to running Unix commands in the background by appending &
 2. docker logs broker // to see the logs of kafka to confirm that the container is running
 3. docker ps // other confirmation to do so
 4. docker exec -it -w /opt/kafka/bin broker sh  // open Kafka's container to make commands from within it.
 5. ./kafka-topics.sh --create --topic <a topic name> --bootstrap-server broker:29092 //creates a topic for the kafka broker to produce and consume messages.
+5.1. ./kafka-topics.sh --list --bootstrap-server broker:29092 //check topics that are created
 6. ./kafka-console-producer.sh  --topic <topic name chosen previously> --bootstrap-server broker:29092 // start a producer console with this command
 7. write whatever messages to then be consumed and press enter for each message, press CTROL -C to finish
 8. open new terminal 
@@ -32,3 +34,5 @@ git restore
 11. write messages in the previous terminal, and they can be seen from the consumer's terminal once pressed enter after each message.
 where the example was gotten from:
 https://developer.confluent.io/confluent-tutorials/kafka-on-docker/?utm_medium=sem&utm_source=google&utm_campaign=ch.sem_br.nonbrand_tp.prs_tgt.dsa_mt.dsa_rgn.emea_sbrgn.uki_lng.eng_dv.all_con.confluent-developer&utm_term=&creative=&device=c&placement=&gad_source=1&gad_campaignid=19560855027&gbraid=0AAAAADRv2c3SGbEo5llRvcdu1HsLIjo56&gclid=CjwKCAiAtq_NBhA_EiwA78nNWEr4Qv6n3Cx9VrBJVuqtQCSGg2yhUCyuibhQ5gw1xKXar--W6a_GchoCY9EQAvD_BwE
+
+Task 2
