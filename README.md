@@ -4,20 +4,31 @@ In this lab, three separate tasks will take place, showing the possibilities Apa
 
 Github Codespaces allows anyone with a github account have their own environment , Visual Studio Code, where Docker in our tasks will also be used, as otherwise Apache Kafka's software would have to be installed, therefore going off the purpose of the lecture.
 
-The tasks will show the basics from, producing and consuming from different terminals, producing the contents from a file into another file, to then read live from an RSS source.
+The tasks will show the basics from, producing and consuming from different terminals, producing the contents from a file into another file, to then read live from an RSS source as well as other ones.
 
-The following tasks will gather use of the docker-compose.yaml file to run a containerized image within Docker of the Kafka server, as well as Zookeeper. Have a look at the file and come back here for deeper understanding of each component, otherwise you can move on to the first task.
+The following tasks will gather use of the docker-compose.yaml file to run a containerized image within Docker of the Kafka server, as well as Zookeeper. Have a look at the file and come back here for deeper understanding of each component, otherwise you can move on to the setup.
 
 - services : Defines the containers that Docker Compose will manage.
 - broker : The name of the service, in this case "broker", which will be referenced in the commands.
 - image : apache/kafka:latest : 
 
+# Setup
+To complete this lab, you will need access to a github account. This will allow you to fork the project, and within your codespace environment complete the task. The following steps will help ypu get fully setup to start working on the lab:
+1. Log in to GitHub from Google Chrome
+2. Go to the following repository, https://github.com/angelosbw/Introduction_To_Kafka_Lab
+3. Click fork at the top right
+4. Click fork again, and now you should be back in the repository, only that it is within your account and under the _**Introduction_To_Kafka_Lab**_ you should see _**forked from ...**_
+5. In green you should see the green button _**Code**_, click it, and click on codespaces.
+6. Select _**Create codespace on main**_, and once that's loaded you should have an environment of Visual Studio code.
+7. Have a look around to make sure you've got the following files
+   1. docker-compose.yaml
+   2. readme.md
+   3. test.txt
+   4. test2.txt
+8. Once that's all checked out, you may start the tasks, if you have any questions just raise your hand or ask me!
 
 
 
-git config core.autocrlf true 
-git restore 
-.git status
 
 Task 1
 1. docker compose up -d //-d flag runs the docker container in detached mode which is similar to running Unix commands in the background by appending &
@@ -30,8 +41,8 @@ Task 1
 7. write whatever messages to then be consumed and press enter for each message, press CTRL + C to finish
 8. open new terminal 
 9. write step 4 again
-10. ./kafka-console-consumer.sh --topic <topic name chosen previously> --from-beginning --bootstrap-server broker:29092  //consumes the messages from the chosen topic
-11. write messages in the previous terminal, and they can be seen from the consumer's terminal once pressed enter after each message.
+10. ./kafka-console-consumer.sh --topic <topic name chosen previously> --from-beginning --bootstrap-server broker:29092  //consumes the messages from the chosen topic.
+12. write messages in the previous terminal, and they can be seen from the consumer's terminal once pressed enter after each message.
 where the example was gotten from:
 https://developer.confluent.io/confluent-tutorials/kafka-on-docker/?utm_medium=sem&utm_source=google&utm_campaign=ch.sem_br.nonbrand_tp.prs_tgt.dsa_mt.dsa_rgn.emea_sbrgn.uki_lng.eng_dv.all_con.confluent-developer&utm_term=&creative=&device=c&placement=&gad_source=1&gad_campaignid=19560855027&gbraid=0AAAAADRv2c3SGbEo5llRvcdu1HsLIjo56&gclid=CjwKCAiAtq_NBhA_EiwA78nNWEr4Qv6n3Cx9VrBJVuqtQCSGg2yhUCyuibhQ5gw1xKXar--W6a_GchoCY9EQAvD_BwE
 
@@ -49,4 +60,9 @@ Task 2
 8.2. OR USE for doing it just once cat test.txt | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092
 9. look at test2.txt, you'll see the file has the same contents as test.txt
 9.1. NOTE: if you see weird items in test2.txt, its because the test.txt file is in a wrong format. at the bottom right of the page you can find UTF-16 or similar. click it, save with encoding, UTF 8 (NOT UTF 8 with BOM).
-10. change the text from test.txt into something different and if 5 seconds have passed, you can see them into test2.txt
+10. change the text from test.txt into something different and if 5 seconds have passed, you can see them into test2.txt, or if you chose the command in step 8.2. just repaste it and the contents will be sent to the topic.
+
+# Useful commands
+git config core.autocrlf true 
+git restore 
+.git status
