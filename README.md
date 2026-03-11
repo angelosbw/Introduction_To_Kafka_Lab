@@ -49,9 +49,8 @@ https://developer.confluent.io/confluent-tutorials/kafka-on-docker/?utm_medium=s
 Task 2
 1. docker compose up -d
 2. docker logs broker
-2.5 docker exec -it -w /opt/kafka/bin broker sh
-3. ./kafka-topics.sh --create --topic <a topic name> --bootstrap-server broker:29092
-3.1. ./kafka-topics.sh --list --bootstrap-server broker:29092 //check topics that are created
+3. docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --create --topic <topic name chosen> --bootstrap-server broker:29092
+3.1. docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --list --bootstrap-server broker:29092 //check topics that are created
 4. exit
 5. docker exec broker /opt/kafka/bin/kafka-console-consumer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092> test2.txt
 6. leave this terminal open and open a second one
@@ -61,6 +60,8 @@ Task 2
 9. look at test2.txt, you'll see the file has the same contents as test.txt
 9.1. NOTE: if you see weird items in test2.txt, its because the test.txt file is in a wrong format. at the bottom right of the page you can find UTF-16 or similar. click it, save with encoding, UTF 8 (NOT UTF 8 with BOM).
 10. change the text from test.txt into something different and if 5 seconds have passed, you can see them into test2.txt, or if you chose the command in step 8.2. just repaste it and the contents will be sent to the topic.
+
+Task 3
 
 # Useful commands
 git config core.autocrlf true 
