@@ -102,17 +102,50 @@ watch -n 5 'cat test.txt | docker exec -i broker /opt/kafka/bin/kafka-console-pr
 ```
 Once that's done, look at test2.txt, you'll see the file has the same contents as test.txt
 **NOTE:** if you see weird items in test2.txt, its because the test.txt file is in a wrong format. At the bottom right of the page you can find UTF-16 or similar. Click it, save with encoding, UTF 8 (NOT UTF 8 with BOM).
-Have a try to change the text from test.txt into something different and repaste the previous code so that the contents will be sent to the topic. If instead you chose the second command, if 5 seconds have passed and you've changed the contents in test.txt, you can see them into test2.txt.
+Have a try to change the text from test.txt into something different and repaste the previous code so that the contents will be sent to the topic. Though if you chose the second command, and 5 seconds have passed and you've changed the contents in test.txt, you can see them into test2.txt.
 
 Well Done! You've just created your first stream from one source to another like in a database, or like in a social media as Messenger for example. Have some play around to see how things can be changed, for example add different commands to the producer or consumer as such.
-**_Hint_**: Start the consumer again to read from the same topic, but take off --from-beginning, this will let your consumer display messages in real time as soon as they're pushed from the producer.
 
-Task 3
-1. docker compose up -d
-2. docker logs broker
-3. docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --create --topic <topic name chosen> --bootstrap-server broker:29092
-4. curl -s "https://feeds.bbci.co.uk/news/rss.xml" | grep "<title>" | sed 's/<title>//g; s/<\/title>//g; s/^[ \t]*//; s/[ \t]*$//' | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic rssfeed --bootstrap-server broker:29092
-5. docker exec broker /opt/kafka/bin/kafka-console-consumer.sh --topic rssfeed --bootstrap-server broker:29092 --from-beginning --max-messages 10
+# Reading headlines from the BBC.
+As you saw from previous examples, Kafka can be used to send or receive messages, as well as send or receive contents of files. In this task though, you'll be shown something that you can do yourself throughout your daily life. Many websites, companies nowadays give out free, or with a plan, RSS resources. These resources can be accessed through Kafka Connect, which is something used within enterprises to make this process autonomous, or through CURL commands.
+As a start, like previously, follow these steps to have the environment started and setup.
+```
+docker compose up -d
+```
+```
+docker logs broker
+```
+```
+docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --create --topic <topic name chosen> --bootstrap-server broker:29092
+```
+And then you'll be starting a consumer
+```
+docker exec broker /opt/kafka/bin/kafka-console-consumer.sh --topic rssfeed --bootstrap-server broker:29092 --from-beginning --max-messages 10
+```
+
+Once that's ready the following command sections will be explained on what they do, but they'll be added into one command:
+1. See raw RSS data from the bbc
+```
+curl -s "https://feeds.bbci.co.uk/news/rss.xml" 
+```
+2. Filter for titles
+```
+grep "<title>"
+```
+3. Clean the data
+```
+sed 's/<title>//g; s/<\/title>//g; s/<!\[CDATA\[//g; s/^[ \t]*//;s/]]>//g; s/[ \t]*$//'
+```
+4. Sending the content to Kafka's topic
+```
+docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic rssfeed --bootstrap-server broker:29092
+```
+These commands added together, will push onto the topic "rssfeed" for the messages to then be read by consumers. Therefore try this command in a split terminal putting the topic title to what you wish!
+```
+curl -s "https://feeds.bbci.co.uk/news/rss.xml" | grep "<title>" | sed 's/<title>//g; s/<\/title>//g; s/<!\[CDATA\[//g; s/^[ \t]*//;s/]]>//g; s/[ \t]*$//' | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic rssfeed --bootstrap-server broker:29092
+```
+
+Well Done! You've just created your first stream from an RSS source, or like in a social media as Messenger for example. Have some play around to see how things can be changed, for example finding different rss sources online like the BBC!
 
 task 4
 https://docs.confluent.io/platform/current/ksqldb/quickstart.html
