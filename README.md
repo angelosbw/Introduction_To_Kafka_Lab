@@ -70,19 +70,42 @@ Well Done! You've just created your first stream from one source to another. Try
 where the example was gotten from:
 https://developer.confluent.io/confluent-tutorials/kafka-on-docker/?utm_medium=sem&utm_source=google&utm_campaign=ch.sem_br.nonbrand_tp.prs_tgt.dsa_mt.dsa_rgn.emea_sbrgn.uki_lng.eng_dv.all_con.confluent-developer&utm_term=&creative=&device=c&placement=&gad_source=1&gad_campaignid=19560855027&gbraid=0AAAAADRv2c3SGbEo5llRvcdu1HsLIjo56&gclid=CjwKCAiAtq_NBhA_EiwA78nNWEr4Qv6n3Cx9VrBJVuqtQCSGg2yhUCyuibhQ5gw1xKXar--W6a_GchoCY9EQAvD_BwE
 
-Task 2
-1. docker compose up -d
-2. docker logs broker
-3. docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --create --topic <topic name chosen> --bootstrap-server broker:29092
-3.1. docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --list --bootstrap-server broker:29092 //check topics that are created
-5. docker exec broker /opt/kafka/bin/kafka-console-consumer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092> test2.txt
-6. leave this terminal open and open a second one
-7. open the txt file called test2.txt, you'll see its currently empty
-8.1. USE THiS for producing all the file every 5 seconds watch -n 5 'cat test.txt | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092'
-8.2. OR USE for doing it just once cat test.txt | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092
-9. look at test2.txt, you'll see the file has the same contents as test.txt
-9.1. NOTE: if you see weird items in test2.txt, its because the test.txt file is in a wrong format. at the bottom right of the page you can find UTF-16 or similar. click it, save with encoding, UTF 8 (NOT UTF 8 with BOM).
-10. change the text from test.txt into something different and if 5 seconds have passed, you can see them into test2.txt, or if you chose the command in step 8.2. just repaste it and the contents will be sent to the topic.
+# Real time file updates
+The following task will give you a grasp of how Kafka can be used in the real world for social media, as well as other industry scenarios. You'll have a look at the producer reading the contents from a file and sending the contents to a topic, and a consumer pulling messages from that topic and inserting them into a new file. 
+
+As a start like the previous task, the following commands will help you start the environment, and make sure to replace the **<topic name chosen>** to the name you want your topic to have.
+```
+docker compose up -d
+```
+```
+docker ps
+```
+```
+docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --create --topic <topic name chosen> --bootstrap-server broker:29092
+```
+```
+docker exec -it -w /opt/kafka/bin broker ./kafka-topics.sh --list --bootstrap-server broker:29092 //check topics that are created
+```
+
+Once confirmed that the topic is created and the containers are running, above your terminal on the top right, click the button to have two terminals splitting the screen. This will help you visualize the performance better as well and see in real time things happening.
+The following command, written on the first terminal, will help your create a consumer, which will wait for the messages to be pushed onto the topic it wants to read.
+```
+docker exec broker /opt/kafka/bin/kafka-console-consumer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092> test2.txt
+```
+Leave this terminal open, as now you'll be working onto the second terminal (the one on the right). Following this action, i suggest opening the text file called test2.txt, you'll see its currently empty. In here, every message that's written in test.txt will appear in here once the producer has pushed the contents to the topic.
+Once you had a look at the files, use the following commands at your choice, where the first will get you to have a producer pushing the messages once, or the second one, where the producer will keep on pushing all the contents in test.txt every 5 seconds. If the second command is chosen, just click CTRL+C within the same terminal to exit from the shell.
+```
+cat test.txt | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092
+```
+```
+watch -n 5 'cat test.txt | docker exec -i broker /opt/kafka/bin/kafka-console-producer.sh --topic <topic name chosen previously> --bootstrap-server broker:29092'
+```
+Once that's done, look at test2.txt, you'll see the file has the same contents as test.txt
+**NOTE:** if you see weird items in test2.txt, its because the test.txt file is in a wrong format. At the bottom right of the page you can find UTF-16 or similar. Click it, save with encoding, UTF 8 (NOT UTF 8 with BOM).
+Have a try to change the text from test.txt into something different and repaste the previous code so that the contents will be sent to the topic. If instead you chose the second command, if 5 seconds have passed and you've changed the contents in test.txt, you can see them into test2.txt.
+
+Well Done! You've just created your first stream from one source to another like in a database, or like in a social media as Messenger for example. Have some play around to see how things can be changed, for example add different commands to the producer or consumer as such.
+**_Hint_**: Start the consumer again to read from the same topic, but take off --from-beginning, this will let your consumer display messages in real time as soon as they're pushed from the producer.
 
 Task 3
 1. docker compose up -d
