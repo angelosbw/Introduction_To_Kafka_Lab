@@ -23,8 +23,10 @@ To complete this lab, you will need access to a Github account. This will allow 
 2. Go to the following repository, unless you're already in it, https://github.com/angelosbw/Introduction_To_Kafka_Lab
 3. Click fork at the top right
 4. Click fork again, and now you should be back in the repository, only that it is within your account and under the _**Introduction_To_Kafka_Lab**_ you should see _**forked from ...**_
-5. In green you should see the green button _**Code**_, click it, and click on codespaces.
-6. Select _**Create codespace on main**_, and once that's loaded you should have an environment of Visual Studio code.
+5. In green you should see the green button <img width="115" height="38" alt="image" src="https://github.com/user-attachments/assets/78e8b412-a75e-4aef-bdaa-176caa8a96f6" />, click it, and click on codespaces <img width="387" height="34" alt="image" src="https://github.com/user-attachments/assets/9e309b7d-d58e-45b9-87aa-5bed59027581" />
+
+6. Select <img width="216" height="32" alt="image" src="https://github.com/user-attachments/assets/7ee8f5e4-1083-46ec-bd91-fd1b320a6650" />
+and once that's loaded you should have an environment of Visual Studio code.
 7. Have a look around to make sure you've got the following files
    1. docker-compose.yaml
    2. readme.md
@@ -131,7 +133,8 @@ And then you'll be starting a consumer
 docker exec broker /opt/kafka/bin/kafka-console-consumer.sh --topic "topic name" --bootstrap-server broker:29092 --from-beginning --max-messages 10
 ```
 
-Once that's ready the following command sections will be explained on what they do, but they'll be added into one command:
+Once that's ready, go to the [BBC website](https://www.bbc.co.uk/) and look at the latest news. Remember some of them as we'll be fetching them! 
+The following command sections will be explained on what they do, but they'll be added into one command:
 1. See raw RSS data from the BBC
 ```
 curl -s "https://feeds.bbci.co.uk/news/rss.xml" 
