@@ -1,5 +1,7 @@
 # Introduction_To_Kafka_Lab
 
+> Lecture and lab material I designed and delivered at Heriot-Watt University as part of my MEng Software Engineering studies, introducing classmates and lecturers to Apache Kafka and data pipelines.
+
 In this lab, you'll learn more about Apache Kafka. The core objectives will be to understand it's structure, how its producers and consumers work, how it can be used in the real world, and how you could use it yourself. 
 
 The lab involves taking part in four separate tasks, showing the possibilities Apache Kafka can create for individuals, companies, or users in general. For the purpose on keeping this lab as simple as possible, as well as allowing everyone to participate and gather further understanding, Github Codespaces is chosen. The following commands you will try will be working for Linux environments if you were to use them outside of GitHub Codespaces. For Windows, some commands might give issues resulting in unexpected errors.
